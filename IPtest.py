@@ -1863,7 +1863,7 @@ def main():
     result_ips = result_ips[:100]  # 基础版上限 100 条（定死）
     # 宣传语固定分配：第 N 个 IP 配第 N 句，更新时只换 IP、文字不动
     entry_by_ip = {ip: FIXED_NODE_NAMES[i] for i, ip in enumerate(result_ips)}
-    result = [f"{ip}# {entry_by_ip[ip]}" for ip in result_ips]
+    result = [f"{ip}:443# {entry_by_ip[ip]}" for ip in result_ips]
     if result:
         # 立即保存基础文件
         with open('Senflare.txt', 'w', encoding='utf-8') as f:
@@ -1953,7 +1953,7 @@ def main():
             logger.debug(f"高级地区 {region} 格式化完成，包含 {len(sorted_ips)} 个IP")
         
         pro_result_ips = pro_result_ips[:100]  # 高级版上限 100 条（定死）
-        pro_result = [f"{ip}# {entry_by_ip.get(ip, FIXED_NODE_NAMES[i])}" for i, ip in enumerate(pro_result_ips)]
+        pro_result = [f"{ip}:443# {entry_by_ip.get(ip, FIXED_NODE_NAMES[i])}" for i, ip in enumerate(pro_result_ips)]
         if pro_result:
             with open('Senflare-Pro.txt', 'w', encoding='utf-8') as f:
                 f.write('\n'.join(pro_result))
