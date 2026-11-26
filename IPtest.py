@@ -175,7 +175,7 @@ region_cache = {}
 # 节点显示名固定使用这 400 条爱国爱党爱人民宣传语录（用户亲发原文：前 200 条 2026-11-24 定版、后 200 条同日续补），顺序写死；
 # 同一份名单另存仓库根目录 node_names.txt（一行一条）：程序优先按该文件的顺序排列，内置名单只作兜底。
 # 第 N 个 IP 永远配第 N 条，以后更新只换 IP、文字不动。
-# 当前 IP 上限 100 个，只用到前 100 条；后 300 条是备份，以后放开上限直接续用。
+# 当前 IP 上限 200 个，只用到前 200 条；后 200 条是备份。
 # 同一个 IP 在基础版和高级版中使用同一条（按基础版顺序分配）。
 FIXED_NODE_NAMES = [
     "守护红色江山，不负先辈牺牲。",
@@ -1799,10 +1799,10 @@ def main():
     # 对采集到的IP进行去重和排序，确保唯一性
     unique_ips = sorted(list(set(all_ips)), key=lambda x: [int(p) for p in x.split('.')])
     logger.info(f"🔢 去重后共 {len(unique_ips)} 个唯一IP地址")
-    # 总量上限 100 个（定死）：不管以后加多少个域名，全部域名解出的 IP 合并去重后最多留 100 个
+    # 总量上限 200 个（定死）：不管以后加多少个域名，全部域名解出的 IP 合并去重后最多留 200 个
     if len(unique_ips) > 100:
-        unique_ips = unique_ips[:100]
-        logger.info("✂️ 已截断为 100 个（总量上限）")
+        unique_ips = unique_ips[:200]
+        logger.info("✂️ 已截断为 200 个（总量上限）")
     
     # 检查是否有IP需要检测
     if not unique_ips:
@@ -1860,7 +1860,7 @@ def main():
             result_ips.append(ip)
         logger.debug(f"地区 {region} 格式化完成，包含 {len(sorted_ips)} 个IP")
     
-    result_ips = result_ips[:100]  # 基础版上限 100 条（定死）
+    result_ips = result_ips[:200]  # 基础版上限 200 条（定死）
     # 宣传语固定分配：第 N 个 IP 配第 N 句，更新时只换 IP、文字不动
     entry_by_ip = {ip: FIXED_NODE_NAMES[i] for i, ip in enumerate(result_ips)}
     result = [f"{ip}# {entry_by_ip[ip]}" for ip in result_ips]
@@ -1952,7 +1952,7 @@ def main():
                 pro_result_ips.append(ip)
             logger.debug(f"高级地区 {region} 格式化完成，包含 {len(sorted_ips)} 个IP")
         
-        pro_result_ips = pro_result_ips[:100]  # 高级版上限 100 条（定死）
+        pro_result_ips = pro_result_ips[:200]  # 高级版上限 200 条（定死）
         pro_result = [f"{ip}# {entry_by_ip.get(ip, FIXED_NODE_NAMES[i])}" for i, ip in enumerate(pro_result_ips)]
         if pro_result:
             with open('Senflare-Pro.txt', 'w', encoding='utf-8') as f:
